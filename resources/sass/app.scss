@@ -1,0 +1,22 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Custom SCSS file
+@import 'custom';
+
+/* So I'll need to run the one of two commands in the terminal to complete any updates on my SCSS files
+as they will need to be compiled and rendered to our .CSS file in our public folder.
+
+We can use:
+
+'npm run dev' (which will complile and render on each time this runs)
+
+or
+
+'npm run watch' (this will constantly now run and compile on change). */ 
