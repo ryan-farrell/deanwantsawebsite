@@ -4,7 +4,7 @@
 
     <h1>Make Your Website</h1>
     <hr>
-        <form action="/webpages" method="POST">
+        <form action="/webpages" method="POST" enctype = "multipart/form-data">
             {{csrf_field()}}
 
             {{-- Found the 'csrf_field()' method above works in this version of laravel and creates me
@@ -43,6 +43,15 @@
                     </select>
                     <hr>
                 </div>
+                <div class="form-group"> 
+                    <div>
+                        or select your own background image and upload:
+                        <input type="file" name = "background_image" id = "imageUpload" >
+                        {{-- <input for = "imageUpload" class="btn btn-light" type="submit" name = "Submit" value = "Upload Image"> --}}
+                    </div>
+                </div>
+                <hr>
+
                 
                     <label for="exampleFormControlSelect3">Your Branding <small>(select your brand colours):</small></label>
                     <br>

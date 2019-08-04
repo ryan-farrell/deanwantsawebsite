@@ -7,19 +7,38 @@ use App\MakeWebPage;
 
 class MakeWebPagesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        // echo "<pre>",print_r($websites),"</pre>";
+    
+        /** Copied this '__construct()'function in from the Dashboard controller previously the HomeController
+         *  which was created by Laravel when I used the 'php artisan make:auth' command in CLI. I set an array 
+         * to allow access to the index only which is my 'All Sites' section for guests. I've now commented this
+         * out so guests can only use the links from the 'home' screen. SEE BELOW in the function.
+         * 
+         * Create a new controller instance.
+         *
+         * @return void
+         */
+        public function __construct()
+        {
+            $this->middleware('auth', [
+                'except'=>['index','show']
+                //So this would allow 'guests' to get to our 'webpages' section .
+                ]);
+            }
+            /**
+             * Display a listing of the resource.
+             *
+             * @return \Illuminate\Http\Response
+             */
+            
+            public function index()
+            {
+                // echo "<pre>",print_r($websites),"</pre>";
         // $websites = MakeWebPage::all();
         // $websites = MakeWebPage::orderBy('updated_at','desc')->take(1)->get();
         //$websites = MakeWebPage::orderBy('updated_at','desc')->get();
         
         $websites = MakeWebPage::orderBy('updated_at','desc')->paginate(3);
+    
         return view('pages.webpages')->with('websites',$websites);
     }
     
@@ -51,11 +70,35 @@ class MakeWebPagesController extends Controller
             'colour1' => 'required',
             'colour2' => 'required',
             'colour3' => 'required',
+            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
 
         ]);
 
-       $webpage = new MakeWebPage;
+        // Handle File Upload
+        if($request->hasFile('background_image')){
+        // Get filename with extension
+        $fileNameWithExt = $request->file('background_image')->getClientOriginalName();
+        // Get just filename
+        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        // Get just extension
+        $extension = $request->file('background_image')->getClientOriginalExtension();
+        // Filename to store
+        $fileNameToStore=$fileName.'_'.time().'.'.$extension;
+        //Upload Image
+        $path = $request->file('background_image')->storeAs('public/background_images',$fileNameToStore);
 
+        } else {
+        // If no file uploaded accept 'noimage.jpg' as default into db table in the 'background_image' column 
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+
+        
+
+
+        // Create a new webpage
+       $webpage = new MakeWebPage;
        
        $webpage->siteName = $request->input('siteName');
        $webpage->hero = $request->input('hero');
@@ -66,6 +109,8 @@ class MakeWebPagesController extends Controller
        $webpage->colour2 = $request->input('colour2');
        $webpage->colour3 = $request->input('colour3');
        $webpage->user_id = auth()->user()->id;
+       $webpage->background_image = $fileNameToStore;
+       
 
 
 
@@ -85,7 +130,9 @@ class MakeWebPagesController extends Controller
     public function show($id)
     {
         $page = MakeWebPage::findorFail($id);
-        return view('pages.indvwebpage')->with('page', $page);
+
+        
+                return view('pages.indvwebpage')->with('page', $page);
     }
     
     /**
@@ -97,10 +144,18 @@ class MakeWebPagesController extends Controller
     public function edit($id) // 'localhost/webpages/{id}/edit'
     {
         
+
         $page = MakeWebPage::findorFail($id);
-    
-        return view('pages.edit')->with('page', $page);
+        // Check for correct user
+       
+        if(auth()->user()->id !== $page->user->id){
+            return redirect('/webpages')->with('error', 'Not Authorised User');
+
+        } else {
+
+            return view('pages.edit')->with('page', $page);
     }
+}
 
     /**
      * Update the specified resource in storage.
@@ -154,6 +209,11 @@ class MakeWebPagesController extends Controller
     {
         
         MakeWebPage::findorFail($id)->delete();
+        // Check for correct user
+        if(auth()->user()->id !== $page->user->id){
+            return redirect('/webpages')->with('error', 'Not Authorised User');
+
+        }
         return redirect('/webpages')->with('success', 'Website Deleted');
 
     }

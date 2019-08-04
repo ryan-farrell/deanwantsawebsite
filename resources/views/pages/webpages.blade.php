@@ -12,6 +12,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Hero Text</h5>
                             <p class="card-text">{{$website->hero}}</p>
+                            <p class="card-text">Name of your uploaded image: {{$website->background_image}}</p>
                             <small> Created on {{$website->created_at}} and created by {{$website->user->name}} </small>
                             <hr>
                             {{-- This href below now goes through my 'SHOW' function in my 'MakeWebPagesController'. --}}

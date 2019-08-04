@@ -29,6 +29,8 @@
 
             <ul class="navbar-nav my-2 my-lg-2">
               <li class="nav-item" >
+                  <a class="nav-link" href="/webpages">Users Websites</a></li>
+              <li class="nav-item" >
                   <a class="nav-link" href="/webpages/create">Make A New Website</a></li>
           </ul>
  <!--------------------------My Navbar Sections----------------------------------------------------------->

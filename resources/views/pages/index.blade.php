@@ -14,7 +14,7 @@ layouts folder in our view folder.--}}
         <div class="jumbotron text-center">
                 <div class="container">
                  <h1 class="display-3">{{$title}}</h1>
-                        <h3>You give us some ideas on what your website should look like and our state of the art Dean Engine &reg; will do the rest.</h3>
+                        <h3>You give us some ideas on what your website should look like and let our state of the art Dean Engine &reg; do the rest.</h3>
                 <br>
         <div class="container">
                 <div class="row justify-content-around">
