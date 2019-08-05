@@ -11,7 +11,15 @@
             an appropriate token to avoid laravels 419 error where tokens don't match. --}}
             <div class="form-group">
                 <label for="exampleFormControlInput1">Website Name</label>
-                <input type="text" name="siteName" class="form-control" id="exampleFormControlInput1" placeholder="example.com">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><strong>www.</strong></span>
+                        </div>
+                            <input type="text" name="siteName" class="form-control" id="exampleFormControlInput1" placeholder="example">
+                                <div class="input-group-append">
+                        <span class="input-group-text"><strong>.com</strong></span>
+                    </div>
+                </div>
             </div>
                 <hr>
             <div class="form-group">
@@ -30,24 +38,11 @@
                         <option>Fira Sans</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect2">Select your background:</label>
-                    <select name="background" class="form-control" id="exampleFormControlSelect2">
-                        <option value="">Choose...</option>
-                        <option>Trees</option>
-                        <option>Sea</option>
-                        <option>Desert</option>
-                        <option>Fun</option>
-                        <option>Music Concert</option>
-                        <option>None</option>
-                    </select>
-                    <hr>
-                </div>
+                <hr>
                 <div class="form-group"> 
                     <div>
-                        or select your own background image and upload:
-                        <input type="file" name = "background_image" id = "imageUpload" >
-                        {{-- <input for = "imageUpload" class="btn btn-light" type="submit" name = "Submit" value = "Upload Image"> --}}
+                        Please select your background image and upload:  
+                        <input type="file" class="btn btn-light" name = "background_image" id = "imageUpload" >
                     </div>
                 </div>
                 <hr>

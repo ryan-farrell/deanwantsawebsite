@@ -16,7 +16,7 @@
 
           <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                  <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">{{config('app.name', 'DWAW.com')}}</span></a>
+                  <a class="nav-link" href="{{ url('/') }}">Home<span class="sr-only">{{config('app.name', 'DWAW.com')}}</span></a>
                 </li>
               <li class="nav-item">
                   <a class="nav-link" href="/about">About Us</a>

@@ -4,26 +4,31 @@
 
     <h1>Edit Your Website</h1>
     <hr>
-        <form action="/webpages/{{$page->id}}" method="POST">
+        <form action="/webpages/{{$page->id}}" method="POST" id="formUpdate" enctype = "multipart/form-data">
 
             {{csrf_field()}}
             {{-- Found the 'csrf_field()' method above works in this version of laravel and creates me
             an appropriate token to avoid laravels 419 error where tokens don't match. --}}
-
-
-            {{-- <input type="hidden" name="_method" value="PUT"> --}}
 
             {{-- <input type="hidden" name="_method" value="PUT"> --}}
             {{method_field('PUT')}}
 
             <div class="form-group">
                 <label for="exampleFormControlInput1">Website Name</label>
-                <input value="{{$page->siteName}}"type="text" name="siteName" class="form-control" id="exampleFormControlInput1" placeholder="example.com">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><strong>www.</strong></span>
+                        </div>
+                            <input value="{{$page->siteName}}" type="text" name="siteName" class="form-control" id="exampleFormControlInput1" placeholder="example">
+                                <div class="input-group-append">
+                        <span class="input-group-text"><strong>.com</strong></span>
+                    </div>
+                </div>
             </div>
                 <hr>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Example text for your hero section:</label>
-            <textarea class="form-control" name="hero" id="exampleFormControlTextarea1" rows="3">{{$page->hero}}</textarea>
+            <textarea class="form-control" name="hero" id="exampleFormControlTextarea1" rows="3" placeholder="Please type here...">{{$page->hero}}</textarea>
             </div>
                 <hr>
                 <div class="form-group">
@@ -37,19 +42,17 @@
                         <option>Fira Sans</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect2">Select your background:</label>
-                    <select name="background" class="form-control" id="exampleFormControlSelect2">
-                        <option>{{$page->background}}</option>
-                        <option>Trees</option>
-                        <option>Sea</option>
-                        <option>Desert</option>
-                        <option>Fun</option>
-                        <option>Music Concert</option>
-                        <option>None</option>
-                    </select>
-                    <hr>
-                  <label for="exampleFormControlSelect3">Your Branding <small>(select your brand colours):</small></label>
+                <hr>
+                <div class="form-group"> 
+                    <div>
+                        Please select your background image and upload:  
+                        <input type="file" class="btn btn-light" name = "background_image" id = "imageUpload">
+                    </div>
+                </div>
+                <hr>
+
+                
+                    <label for="exampleFormControlSelect3">Your Branding <small>(select your brand colours):</small></label>
                     <br>
                 <div class="form-row d-flex justify-content-around">
                
@@ -92,15 +95,18 @@
                         <option>Grey</option>
                     </select>
                 </div>
-            </div>
+            </div>  
         <hr>
-        <div class="d-flex">
-        <button type="submit" class="btn btn-success p-2" value="submit">Update Website</button>
+        <div class="d-flex justify-content-between">
 
-        <button type="reset" class="btn btn-link ml-auto p-2" href="/makepage">Reset this page</button>
+        <a href="/webpages/{{$page->id}}" class="btn btn-secondary">Go Back</a>  
+
+        <button type="reset" class="btn btn-link" href="">Reset this page</button>
         </div>
 </form>
 <hr>
+<div class="d-flex justify-content-between">
+        <button form="formUpdate" type="submit" class="btn btn-success" value="submit">Update Website</button>
 
 <form action="/webpages/{{$page->id}}" method="POST">
 
@@ -112,8 +118,9 @@
             {{method_field('DELETE')}}
 
             
-        <button type="submit" class="btn btn-danger float-right">Delete this page</button>
+        <button type="submit" class="btn btn-danger">Delete Website</button>
     
 </form>
 
+        </div>
 @endsection
