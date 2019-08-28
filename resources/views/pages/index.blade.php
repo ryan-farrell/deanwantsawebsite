@@ -18,7 +18,7 @@ layouts folder in our view folder.--}}
                 <br>
         <div class="container">
                 <div class="row justify-content-around">
-                        <p class="col-md-6"><a class="btn btn-success btn-lg" href="/login" role="button">Login &raquo;</a></p>
+                        <p class="col-md-6"><a class="btn btn-success btn-lg" href="./auth/login" role="button">Login &raquo;</a></p>
                         <p class="col-md-6"><a class="btn btn-primary btn-lg" href="/register" role="button">Register &raquo;</a></p>
                         </div>
                         </div>

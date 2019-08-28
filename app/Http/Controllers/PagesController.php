@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MakeWebPage;
 
 class PagesController extends Controller
 {
@@ -21,15 +22,41 @@ class PagesController extends Controller
         $title = 'About Us';
         return view('pages.about') -> with ('title', $title);
     }
-    
-    public function services (){
-        $data = [ 
-            'title' => 'Services',
-            'services' => ['Web Design', 'Programming', 'SEO']  
-        ];
-        
-        return view('pages.services') -> with ($data);
-        
-    }
-}
 
+    
+    // /************************ This is my function to get to my preview page ****************************/
+    // /************************ through my page controller ****************************/
+    // /**
+    //  * Display the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function preview (){
+        
+        //     $webpage = MakeWebPage::all();
+        //     // Check for correct user
+        
+        //     if(auth()->user()->id !== $page->user->id){
+            //         return redirect('/webpages')->with('error', 'Not Authorised User');
+            //     } else {
+                //         return view('pages.preview{}')->with('webpage', $webpage);
+                    //         }
+                    //     }
+                    
+                    // /************************ This is my function to get to my preview page ****************************/
+                    // /************************ through my page controller ****************************/
+                    
+                    public function services (){
+                        $data = [ 
+                            'title' => 'Services',
+                            'services' => ['Web Design', 'Programming', 'SEO']  
+                        ];
+                        
+                        return view('pages.services') -> with ($data);
+                        
+                    }
+                    
+                }
+                
+                

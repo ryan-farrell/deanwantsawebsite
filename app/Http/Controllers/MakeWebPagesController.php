@@ -39,8 +39,9 @@ class MakeWebPagesController extends Controller
         //$websites = MakeWebPage::orderBy('updated_at','desc')->get();
         
         $websites = MakeWebPage::orderBy('updated_at','desc')->paginate(3);
-    
+            
         return view('pages.webpages')->with('websites',$websites);
+
     }
     
     /**
@@ -143,7 +144,8 @@ class MakeWebPagesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id) // 'localhost/webpages/{id}/edit'
-    {
+    {   
+       
         $page = MakeWebPage::findorFail($id);
         // Check for correct user
        
@@ -153,8 +155,31 @@ class MakeWebPagesController extends Controller
             return view('pages.edit')->with('page', $page);
     }
 }
+/********************************** My Preview Function ************************************************/
+/********************************** My Preview Function ************************************************/
+/**
+ * Display the specified resource.
+ *
+ * @param  int  $id
+ * @return \Illuminate\Http\Response
+ */
+public function preview (){
+    
+    $webpage = MakeWebPage::findOrFail(23);
+    // Check for correct user
+    
+    if(auth()->user()->id !== $webpage->user->id){
+        return redirect('/webpages')->with('error', 'Not Authorised User');
+    } else {
+        return view('pages.preview')->with('webpage', $webpage);
+    }
 
-    /**
+}
+
+/********************************** My Preview Function ************************************************/
+/********************************** My Preview Function ************************************************/
+
+/**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
