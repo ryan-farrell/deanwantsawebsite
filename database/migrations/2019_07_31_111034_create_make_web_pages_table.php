@@ -18,10 +18,11 @@ class CreateMakeWebPagesTable extends Migration
             $table->string('siteName');
             $table->mediumText('hero');
             $table->string('fontType');
-            $table->string('background');
+            $table->string('background_image')->default('noimage.jpg')->nullable();
             $table->string('colour1');
             $table->string('colour2');
             $table->string('colour3');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

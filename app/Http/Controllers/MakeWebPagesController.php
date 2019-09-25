@@ -8,12 +8,12 @@ use App\MakeWebPage;
 
 class MakeWebPagesController extends Controller
 {
-    
+
         /** Copied this '__construct()'function in from the Dashboard controller previously the HomeController
-         *  which was created by Laravel when I used the 'php artisan make:auth' command in CLI. I set an array 
+         *  which was created by Laravel when I used the 'php artisan make:auth' command in CLI. I set an array
          * to allow access to the index only which is my 'All Sites' section for guests. I've now commented this
          * out so guests can only use the links from the 'home' screen. SEE BELOW in the function.
-         * 
+         *
          * Create a new controller instance.
          *
          * @return void
@@ -30,20 +30,20 @@ class MakeWebPagesController extends Controller
              *
              * @return \Illuminate\Http\Response
              */
-            
+
             public function index()
             {
                 // echo "<pre>",print_r($websites),"</pre>";
         // $websites = MakeWebPage::all();
         // $websites = MakeWebPage::orderBy('updated_at','desc')->take(1)->get();
         //$websites = MakeWebPage::orderBy('updated_at','desc')->get();
-        
+
         $websites = MakeWebPage::orderBy('updated_at','desc')->paginate(3);
-            
+
         return view('pages.webpages')->with('websites',$websites);
 
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -51,10 +51,10 @@ class MakeWebPagesController extends Controller
      */
     public function create()
     {
-        
+
         return view('pages.makepage');
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -63,7 +63,7 @@ class MakeWebPagesController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $this->validate($request,[
             'siteName' => 'required',
             'hero' => 'required',
@@ -91,17 +91,17 @@ class MakeWebPagesController extends Controller
         $path = $request->file('background_image')->storeAs('public/background_images',$fileNameToStore);
 
         } else {
-        // If no file uploaded accept 'noimage.jpg' as default into db table in the 'background_image' column 
+        // If no file uploaded accept 'noimage.jpg' as default into db table in the 'background_image' column
             $fileNameToStore = 'noimage.jpg';
         }
 
 
-        
+
 
 
         // Create a new webpage
        $webpage = new MakeWebPage;
-       
+
        $webpage->siteName = $request->input('siteName');
        $webpage->hero = $request->input('hero');
        $webpage->fontType = $request->input('fontType');
@@ -112,17 +112,17 @@ class MakeWebPagesController extends Controller
        $webpage->colour3 = $request->input('colour3');
        $webpage->user_id = auth()->user()->id;
        $webpage->background_image = $fileNameToStore;
-       
+
 
 
 
        $webpage->save();
-       
-       
-       return redirect('/webpages')->with('success', 'Website Created');       
-    
+
+
+       return redirect('/webpages')->with('success', 'Website Created');
+
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -133,10 +133,10 @@ class MakeWebPagesController extends Controller
     {
         $page = MakeWebPage::findorFail($id);
 
-        
+
                 return view('pages.indvwebpage')->with('page', $page);
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -144,11 +144,11 @@ class MakeWebPagesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id) // 'localhost/webpages/{id}/edit'
-    {   
-       
+    {
+
         $page = MakeWebPage::findorFail($id);
         // Check for correct user
-       
+
         if(auth()->user()->id !== $page->user->id){
             return redirect('/webpages')->with('error', 'Not Authorised User');
         } else {
@@ -164,10 +164,10 @@ class MakeWebPagesController extends Controller
  * @return \Illuminate\Http\Response
  */
 public function preview (){
-    
+
     $webpage = MakeWebPage::findOrFail(23);
     // Check for correct user
-    
+
     if(auth()->user()->id !== $webpage->user->id){
         return redirect('/webpages')->with('error', 'Not Authorised User');
     } else {
@@ -199,7 +199,7 @@ public function preview (){
         ]);
 
         // Handle File Update
-        if($request->hasFile('background_image')){ 
+        if($request->hasFile('background_image')){
             // Get filename with extension
             $fileNameWithExt = $request->file('background_image')->getClientOriginalName();
             // Get just filename
@@ -209,12 +209,12 @@ public function preview (){
             // Filename to store
             $fileNameToStore=$fileName.'_'.time().'.'.$extension;
             //Upload Image
-            $path = $request->file('background_image')->storeAs('public/background_images',$fileNameToStore);
+            $path = $request->file('background_image')->storeAs('public/background_images', $fileNameToStore);
         }
-        
+
         /* Update my post by calling the website specific '$id' and essentially re
         running my store() function as above. */
-        
+
         $webpage = MakeWebPage::findorFail($id);
         $webpage->siteName = $request->input('siteName');
         $webpage->hero = $request->input('hero');
@@ -226,16 +226,16 @@ public function preview (){
         /* I'll need to check that if I don't upload a file that the image doesn't get updated with nothing. */
         if($request->hasFile('background_image')){ // = false
             $webpage->background_image = $fileNameToStore;
-        
+
         }
 
         /************************** Need to create function delete the old version picture if the user updates  ******************************************/
-        
+
         $webpage->save();
-        
-        return redirect('/webpages')->with('success', 'Website Updated');    
+
+        return redirect('/webpages')->with('success', 'Website Updated');
 }
-    
+
     /**
      * Remove the specified resource from storage.
      *
